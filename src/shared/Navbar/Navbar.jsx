@@ -5,8 +5,8 @@ import { Phone, ArrowUpRight, Globe2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/images/logo/Capture.png';
-// import logoWhite from '../../assets/images/logo/قوي نجد 2.jpg';
+import logo from '../../assets/images/logo/2.svg';
+
 const navigation = [
   { nameKey: 'navigation.home', href: '#' },
   { nameKey: 'navigation.about', href: '#' },
@@ -66,13 +66,10 @@ export default function Navbar() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 justify-between items-center">
               {/* Logo */}
-              <div className="  h-20   rounded-lg">
+              <div className="  h-full w-[150px]   rounded-lg">
                 <img src={logo} alt="logo" className="h-full w-full object-cover " />
               </div>
-               {/* <div className=" h-16 w-16 rounded-lg">
-                <img src={logoWhite} alt="logo" className="h-full w-full object-contain " />
-              </div>
-               */}
+       
               {/* Navigation */}
               <div className="hidden md:flex gap-8">
                 {navigation.map((item) => (
