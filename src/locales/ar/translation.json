@@ -1,0 +1,15 @@
+{
+  "welcome": "مرحباً بك في قوي نجد",
+  "language": "اللغة",
+  "navigation": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "services": "خدماتنا",
+    "projects": "مشاريعنا",
+    "contact": "اتصل بنا"
+  },
+  "buttons": {
+    "request_quote": "طلب عرض السعر"
+  },
+  "request_quote": "طلب عرض السعر"
+} 
