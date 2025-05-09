@@ -5,7 +5,8 @@ import { Phone, ArrowUpRight, Globe2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/images/logo/2.svg';
+import logoAr from '../../assets/images/logo/2.svg';
+import logoEn from '../../assets/images/logo/3.svg';
 
 const navigation = [
   { nameKey: 'navigation.home', href: '#' },
@@ -66,8 +67,8 @@ export default function Navbar() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 justify-between items-center">
               {/* Logo */}
-              <div className="  h-full w-[150px]   rounded-lg">
-                <img src={logo} alt="logo" className="h-full w-full object-cover " />
+              <div className="h-full w-[150px] rounded-lg">
+                <img src={lang === 'ar' ? logoAr : logoEn} alt="logo" className="h-full w-full object-cover" />
               </div>
        
               {/* Navigation */}
@@ -198,56 +199,7 @@ export default function Navbar() {
                   </span>
                   <span className={`text-black ${lang === 'ar' ? 'ml-2' : 'mr-2'}`}>{t('request_quote')}</span>
                 </Link>
-                {/* Mobile Language Switcher */}
-                {/* <Menu as="div" className="relative inline-block text-left w-full">
-                  {({ open }) => (
-                    <>
-                      <Menu.Button
-                        as={motion.button}
-                        whileTap={{ scale: 0.93, rotate: 2 }}
-                        className={`flex items-center justify-center gap-2 w-full px-3 py-3 rounded-full border border-black bg-white shadow-md hover:border-[#F03E2F] transition-all focus:outline-none ${open ? 'ring-2 ring-[#F03E2F]/30' : ''}`}
-                        aria-expanded={open}
-                      >
-                        <span className="text-xl">{currentLang.flag}</span>
-                        <span className="font-bold text-sm uppercase tracking-widest">{currentLang.short}</span>
-                        <Globe2 size={18} className="text-[#F03E2F] ml-1" />
-                        <motion.span
-                          animate={{ rotate: open ? 180 : 0 }}
-                          transition={{ type: 'spring', stiffness: 300 }}
-                          className="ml-1"
-                        >
-                          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 8l4 4 4-4" stroke="#F03E2F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        </motion.span>
-                      </Menu.Button>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="transform opacity-0 scale-95 blur-sm -translate-y-2"
-                        enterTo="transform opacity-100 scale-100 blur-0 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="transform opacity-100 scale-100 blur-0 translate-y-0"
-                        leaveTo="transform opacity-0 scale-95 blur-sm -translate-y-2"
-                      >
-                        <Menu.Items as={motion.div} initial={{ opacity: 0, y: -10, filter: 'blur(8px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10, filter: 'blur(8px)' }} transition={{ duration: 0.25 }}
-                          className="absolute z-10 mt-2 w-full origin-top-right rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none backdrop-blur-sm">
-                          {LANGUAGES.filter(lng => lng.code !== i18n.language).map((lng) => (
-                            <Menu.Item key={lng.code}>
-                              {({ active, close }) => (
-                                <button
-                                  onClick={() => { i18n.changeLanguage(lng.code); setLang(lng.code); close(); }}
-                                  className={`w-full flex items-center gap-2 px-4 py-2 text-sm font-bold uppercase rounded-md transition ${active ? 'bg-gray-100' : ''} text-black`}
-                                >
-                                  <span className="text-xl">{lng.flag}</span>
-                                  {lng.label}
-                                </button>
-                              )}
-                            </Menu.Item>
-                          ))}
-                        </Menu.Items>
-                      </Transition>
-                    </>
-                  )}
-                </Menu> */}
+               
                    <Menu as="div" className="relative inline-block text-left">
                     {({ open }) => (
                       <>
