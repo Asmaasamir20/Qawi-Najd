@@ -6,7 +6,7 @@ import ScrollToTop from "../components/routing/ScrollToTop";
 
 const MasterLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col text-black  min-h-screen">
       <ScrollToTop />
       <a
         href="#main-content"
@@ -18,11 +18,11 @@ const MasterLayout = () => {
         <Navbar />
       </header>
 
-      <main id="main-content" className="flex-grow" role="main">
+      <main id="main-content" className="flex-grow " role="main">
         <Outlet />
       </main>
 
-      <footer role="contentinfo">
+      <footer role="contentinfo ">
         <Footer />
       </footer>
     </div>
