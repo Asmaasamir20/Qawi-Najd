@@ -1,0 +1,46 @@
+{
+  "welcome": "Welcome to Qawi Najd",
+  "language": "Language",
+  "request_quote": "Request a quote",
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "pricing": "Pricing",
+    "portfolio": "Portfolio",
+    "blog": "Blog"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "footer": {
+    "about": "A leading company in design and construction, we always strive to provide the best services to our valued customers",
+    "usefulLinks": "Useful Links",
+    "workingHours": "Working Hours",
+    "monToFri": "Mon to Fri",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "closed": "Closed",
+    "contactUs": "Contact Us",
+    "address": "250 Main Street, 2nd Floor.\nRiyadh, Saudi Arabia",
+    "copyright": "© All Rights Reserved",
+    "terms": "Terms and Conditions / Privacy Policy",
+    "newsletter": {
+      "title": "Subscribe to our newsletter,",
+      "subtitle": "Stay always in touch!",
+      "placeholder": "Enter Your Email",
+      "button": "Subscribe Now",
+      "terms": "I am accepted the",
+      "termsLink": "Terms & Conditions"
+    },
+    "lattice": "Lattice",
+    "pricing_plan": "Pricing Plan",
+    "company_info": "250 Main Street, 2nd Floor.\nUSA, 56004",
+    "copyright_text": "©Designthemes all rights Reserved",
+    "terms_text": "Terms and conditions / Privacy policy"
+  }
+}
