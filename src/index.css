@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Language Transition Styles */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Smooth transition for all elements when language changes */
+* {
+  transition: font-family 0.3s ease;
+}
+
+/* Font family for Arabic */
+[lang="ar"] {
+  font-family: "Cairo", sans-serif;
+}
+
+/* Font family for English */
+[lang="en"] {
+  font-family: "Inter", sans-serif;
+}
+
+/* Smooth transition for text content */
+.text-content {
+  transition: all 0.3s ease;
+}
+
+/* Animation for language switch */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.language-transition {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -16,6 +81,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
-
