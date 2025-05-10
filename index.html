@@ -1,19 +1,75 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <!-- Favicon (يفضل تكون صورة مربعة وصغيرة الحجم، مثلاً 32x32) -->
-<link rel="icon" type="image/png" href="./src/assets/images/logo/Capture.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="قوَى نَجْد للاستشارات الهندسية - شركة رائدة في مجال التصميم والبناء، نسعى دائماً لتقديم أفضل الخدمات لعملائنا الكرام" />
+    <meta name="theme-color" content="#F03E2F" />
 
-<!-- Responsive design -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- تحسين الأداء -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<!-- عنوان الصفحة -->
-<title> قوَى نَجْد للاستشارات الهندسية</title>
+    <!-- تحسين تحميل الفونتات -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'" />
 
+    <!-- الأيقونة المفضلة (يفضل تكون صورة مربعة وصغيرة الحجم) -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="./src/assets/images/logo/Capture.webp" />
+    <link rel="apple-touch-icon" href="./src/assets/images/logo/Capture.webp" />
+
+    <!-- تحسين تحميل CSS -->
+    <style>
+      /* Inline critical CSS */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        transition: opacity 0.3s;
+      }
+      #root {
+        min-height: 100vh;
+      }
+
+      /* Loading state optimization */
+      html.loading {
+        opacity: 1;
+      }
+    </style>
+
+    <!-- عنوان الصفحة -->
+    <title>قوَى نَجْد للاستشارات الهندسية</title>
+
+    <!-- تحميل مسبق للملفات الهامة -->
+    <link rel="preload" href="/src/main.jsx" as="script" />
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- تحسين أداء تحميل JavaScript -->
+    <script>
+      // تعيين علامة تحميل
+      document.documentElement.classList.add("loading");
+
+      // إزالة علامة التحميل عندما تحمل الصفحة
+      window.addEventListener("load", function () {
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove("loading");
+        });
+      });
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

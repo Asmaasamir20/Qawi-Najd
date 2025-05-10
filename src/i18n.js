@@ -15,13 +15,16 @@ const resources = {
   },
 };
 
+// Check if language is saved in localStorage
+const savedLanguage = localStorage.getItem("i18nextLng");
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
     fallbackLng: "ar",
-    lng: "ar",
+    lng: savedLanguage || "ar",
     debug: false,
     supportedLngs: ["ar", "en"],
     interpolation: {
@@ -30,6 +33,7 @@ i18n
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
+      lookupLocalStorage: "i18nextLng",
     },
     react: {
       useSuspense: true,

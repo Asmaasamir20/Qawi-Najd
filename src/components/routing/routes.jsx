@@ -1,16 +1,61 @@
 import { createBrowserRouter, Navigate, Link } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, createElement, memo } from "react";
 import MasterLayout from "./../../Layout/MasterLayout";
+import LoadingSpinner from "../../shared/LoadingSpinner";
 
-// Loading component
-const Loading = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#F03E2F]"></div>
-  </div>
-);
+// استراتيجية إحضار البيانات مسبقًا للتحميل الأسرع (preload)
+const preloadComponent = (importFn) => {
+  const Component = lazy(importFn);
+  // بدء تحميل المكون مسبقًا لتجنب انتظار المستخدم
+  importFn();
+  return Component;
+};
 
-// Error component
-const ErrorPage = () => (
+// تحسين مكون تتبع التنقل باستخدام memo
+const NavigationTracker = memo(({ children }) => {
+  useEffect(() => {
+    // تحسين أداء التنقل من خلال تعيين حالة التنقل بطريقة مُحَسَّنة
+    sessionStorage.setItem("isNavigating", "true");
+
+    // استخدام عناصر الأداء للتتبع
+    if (window.performance && window.performance.mark) {
+      window.performance.mark("navigation-start");
+    }
+
+    return () => {
+      // تنظيف عند إلغاء التحميل
+      sessionStorage.removeItem("isNavigating");
+
+      // قياس أداء التنقل
+      if (window.performance && window.performance.mark) {
+        window.performance.mark("navigation-end");
+        window.performance.measure(
+          "navigation-duration",
+          "navigation-start",
+          "navigation-end"
+        );
+      }
+    };
+  }, []);
+
+  return children;
+});
+
+NavigationTracker.displayName = "NavigationTracker";
+
+// محسن لتغليف المسارات كسولة التحميل
+const LazyRoute = memo(({ component: Component }) => (
+  <NavigationTracker>
+    <Suspense fallback={<LoadingSpinner />}>
+      <Component />
+    </Suspense>
+  </NavigationTracker>
+));
+
+LazyRoute.displayName = "LazyRoute";
+
+// مكون الخطأ
+const ErrorPage = memo(() => (
   <div className="min-h-screen flex items-center justify-center bg-gray-100">
     <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md">
       <h1 className="text-6xl font-bold text-[#F03E2F] mb-4">404</h1>
@@ -22,17 +67,19 @@ const ErrorPage = () => (
       </Link>
     </div>
   </div>
-);
+));
 
-// Lazy load pages for better performance
-const Home = lazy(() => import("../../pages/Home"));
-const About = lazy(() => import("../../pages/About"));
-const Services = lazy(() => import("../../pages/Services"));
-const Projects = lazy(() => import("../../pages/Projects"));
-const Contact = lazy(() => import("../../pages/Contact"));
-const Quote = lazy(() => import("../../pages/Quote"));
+ErrorPage.displayName = "ErrorPage";
 
-// Router configuration
+// تحميل الصفحات لاحقًا للحصول على أداء أفضل
+const Home = preloadComponent(() => import("../../pages/Home"));
+const About = preloadComponent(() => import("../../pages/About"));
+const Services = preloadComponent(() => import("../../pages/Services"));
+const Projects = preloadComponent(() => import("../../pages/Projects"));
+const Contact = preloadComponent(() => import("../../pages/Contact"));
+const Quote = preloadComponent(() => import("../../pages/Quote"));
+
+// تكوين الموجه بأداء فائق
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,51 +88,27 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Home />
-          </Suspense>
-        ),
+        element: <LazyRoute component={Home} />,
       },
       {
         path: "about",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <About />
-          </Suspense>
-        ),
+        element: <LazyRoute component={About} />,
       },
       {
         path: "services",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Services />
-          </Suspense>
-        ),
+        element: <LazyRoute component={Services} />,
       },
       {
         path: "projects",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Projects />
-          </Suspense>
-        ),
+        element: <LazyRoute component={Projects} />,
       },
       {
         path: "contact",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Contact />
-          </Suspense>
-        ),
+        element: <LazyRoute component={Contact} />,
       },
       {
         path: "quote",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Quote />
-          </Suspense>
-        ),
+        element: <LazyRoute component={Quote} />,
       },
       { path: "*", element: <Navigate to="/" replace /> },
     ],

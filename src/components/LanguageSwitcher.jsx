@@ -17,6 +17,8 @@ const LanguageSwitcher = () => {
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
+    localStorage.setItem("i18nextLng", lang);
+    setCurrentLang(lang);
     setIsOpen(false);
   };
 
@@ -68,4 +70,4 @@ const LanguageSwitcher = () => {
   );
 };
 
-export default LanguageSwitcher; 
+export default LanguageSwitcher;

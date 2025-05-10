@@ -1,9 +1,8 @@
-import React, { Suspense } from "react";
+import React from "react";
 import Footer from "../shared/Footer/Footer";
 import Navbar from "../shared/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "../components/routing/ScrollToTop";
-import LoadingSpinner from "../shared/LoadingSpinner";
 
 const MasterLayout = () => {
   return (
@@ -20,9 +19,7 @@ const MasterLayout = () => {
       </header>
 
       <main id="main-content" className="flex-grow" role="main">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Outlet />
-        </Suspense>
+        <Outlet />
       </main>
 
       <footer role="contentinfo">
