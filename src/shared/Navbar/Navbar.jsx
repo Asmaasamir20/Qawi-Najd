@@ -207,7 +207,8 @@ export default function Navbar() {
                 {/* Language Switcher - Toggle Switch for Mobile */}
                 <div className="flex items-center justify-center gap-2 mt-3">
                   <div className="flex items-center gap-2 bg-white p-1 rounded-full shadow-sm border border-gray-100">
-                    <button
+                    <Disclosure.Button
+                      as="button"
                       onClick={() => handleLangSwitch("ar")}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
                         lang === "ar"
@@ -216,8 +217,9 @@ export default function Navbar() {
                       }`}>
                       <span className="text-base">{LANGUAGES[0].flag}</span>
                       <span className="text-xs font-medium">العربية</span>
-                    </button>
-                    <button
+                    </Disclosure.Button>
+                    <Disclosure.Button
+                      as="button"
                       onClick={() => handleLangSwitch("en")}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
                         lang === "en"
@@ -226,7 +228,7 @@ export default function Navbar() {
                       }`}>
                       <span className="text-base">{LANGUAGES[1].flag}</span>
                       <span className="text-xs font-medium">English</span>
-                    </button>
+                    </Disclosure.Button>
                   </div>
                 </div>
               </div>
