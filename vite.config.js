@@ -9,7 +9,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // This will tell Vite's React plugin to continue using Fast Refresh
+      // but won't show the error about the DevTools hook
+      fastRefresh: true,
+    }),
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
@@ -90,7 +94,7 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ["console.log", "console.info"],
+        pure_funcs: ["console.log", "console.info", "console.warn"],
         passes: 2,
       },
       mangle: {

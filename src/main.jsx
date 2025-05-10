@@ -1,12 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import './i18n'
-import { RouterProvider } from 'react-router-dom'
-import router from './components/routing/routes'
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./i18n"; // Import i18n configuration
+import App from "./App.jsx";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-)
+const root = createRoot(document.getElementById("root"));
+
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);

@@ -74,7 +74,7 @@ export default function Navbar() {
 
   return (
     <Disclosure as="nav" className="bg-[#f5f9f9]">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 justify-between items-center">
@@ -169,13 +169,13 @@ export default function Navbar() {
           <Disclosure.Panel className="md:hidden bg-[#f5f9f9]">
             <div className="flex flex-col gap-1.5 px-4 pt-3 pb-2">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <Link
                   key={item.nameKey}
-                  as="a"
-                  href={item.href}
-                  className="block text-black font-medium hover:text-[#F03E2F] px-2 py-1.5 rounded-md text-sm">
+                  to={item.href}
+                  className="block text-black font-medium hover:text-[#F03E2F] px-2 py-1.5 rounded-md text-sm"
+                  onClick={() => open && close()}>
                   {t(item.nameKey)}
-                </Disclosure.Button>
+                </Link>
               ))}
               {/* Phone & Quote & Lang in mobile */}
               <div className="flex flex-col gap-2 mt-3">
@@ -189,6 +189,7 @@ export default function Navbar() {
                 </div>
                 <Link
                   to="/quote"
+                  onClick={() => open && close()}
                   className={`flex items-center justify-between border border-black rounded-full px-3 py-1.5 bg-white hover:bg-gray-50 transition group w-full text-sm font-bold ${
                     lang === "ar" ? "flex-row-reverse" : ""
                   }`}>

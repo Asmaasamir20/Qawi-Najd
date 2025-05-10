@@ -50,26 +50,34 @@ const Footer = () => {
               {t("footer.about")}
             </p>
             <div className={`flex gap-4 mt-6 ${isRTL ? "self-start" : ""}`}>
-              <Link
-                to="/facebook"
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[#111] border border-gray-800 hover:bg-[#F03E2F] hover:border-[#F03E2F] transition-all duration-300">
                 <FaFacebookF size={18} />
-              </Link>
-              <Link
-                to="/twitter"
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[#111] border border-gray-800 hover:bg-[#F03E2F] hover:border-[#F03E2F] transition-all duration-300">
                 <FaTwitter size={18} />
-              </Link>
-              <Link
-                to="/youtube"
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[#111] border border-gray-800 hover:bg-[#F03E2F] hover:border-[#F03E2F] transition-all duration-300">
                 <FaYoutube size={18} />
-              </Link>
-              <Link
-                to="/pinterest"
+              </a>
+              <a
+                href="https://pinterest.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-[#111] border border-gray-800 hover:bg-[#F03E2F] hover:border-[#F03E2F] transition-all duration-300">
                 <FaPinterestP size={18} />
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -158,37 +166,6 @@ const Footer = () => {
                 {isRTL ? (
                   <>
                     <span className="text-base text-right">
-                      {t("nav.services")}
-                    </span>
-                    <div className="text-white group-hover:text-[#F03E2F] transition-colors duration-300">
-                      <FaLaptopCode
-                        size={18}
-                        className="group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-white group-hover:text-[#F03E2F] mr-3 transition-colors duration-300">
-                      <FaLaptopCode
-                        size={18}
-                        className="group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                    <span className="text-base">{t("nav.services")}</span>
-                  </>
-                )}
-              </Link>
-
-              <Link
-                to="/pricing"
-                className={`text-gray-400 hover:text-white transition-colors duration-300 
-                  inline-flex items-center group w-full ${
-                    isRTL ? "justify-between" : ""
-                  }`}>
-                {isRTL ? (
-                  <>
-                    <span className="text-base text-right">
                       {t("footer.pricing_plan")}
                     </span>
                     <div className="text-white group-hover:text-[#F03E2F] transition-colors duration-300">
@@ -214,7 +191,7 @@ const Footer = () => {
               </Link>
 
               <Link
-                to="/portfolio"
+                to="/projects"
                 className={`text-gray-400 hover:text-white transition-colors duration-300 
                   inline-flex items-center group w-full ${
                     isRTL ? "justify-between" : ""
@@ -260,29 +237,27 @@ const Footer = () => {
               {t("footer.workingHours")}
             </h3>
             {isRTL ? (
-              <div className="w-full rounded-lg overflow-hidden">
-                <div className="flex flex-col bg-[#111] border border-gray-800 w-full rounded-lg">
-                  <div className="flex border-b border-gray-800">
-                    <div className="w-1/2 py-4 px-5 text-gray-400 border-l border-gray-800 text-right pr-6">
+              <div className="w-full">
+                <div className=" w-full rounded-lg p-4 flex flex-col gap-4">
+                  <div className="flex flex-col gap-1">
+                    <div className="text-gray-400 text-right">
                       من الإثنين إلى الجمعة :
                     </div>
-                    <div className="w-1/2 py-4 px-5 text-white font-medium text-center">
+                    <div className="text-white font-medium text-center">
                       08am - 04pm
                     </div>
                   </div>
-                  <div className="flex border-b border-gray-800">
-                    <div className="w-1/2 py-4 px-5 text-gray-400 border-l border-gray-800 text-right pr-6">
-                      السبت :
-                    </div>
-                    <div className="w-1/2 py-4 px-5 text-white font-medium text-center">
+
+                  <div className="flex flex-col gap-1 border-t border-gray-800 pt-4">
+                    <div className="text-gray-400 text-right">السبت :</div>
+                    <div className="text-white font-medium text-center">
                       08am - 01pm
                     </div>
                   </div>
-                  <div className="flex">
-                    <div className="w-1/2 py-4 px-5 text-gray-400 border-l border-gray-800 text-right pr-6">
-                      الأحد :
-                    </div>
-                    <div className="w-1/2 py-4 px-5 text-white font-medium text-center">
+
+                  <div className="flex flex-col gap-1 border-t border-gray-800 pt-4">
+                    <div className="text-gray-400 text-right">الأحد :</div>
+                    <div className="text-white font-medium text-center">
                       مغلق
                     </div>
                   </div>

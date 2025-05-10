@@ -22,7 +22,7 @@ i18n
     resources,
     fallbackLng: "ar",
     lng: "ar",
-    debug: import.meta.env.DEV,
+    debug: false,
     supportedLngs: ["ar", "en"],
     interpolation: {
       escapeValue: false,
