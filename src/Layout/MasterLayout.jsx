@@ -18,7 +18,7 @@ const MasterLayout = () => {
         <Navbar />
       </header>
 
-      <main id="main-content" className="flex-grow " role="main">
+      <main id="main-content" className="flex-grow p-4" role="main">
         <Outlet />
       </main>
 
