@@ -71,16 +71,20 @@ const ServiceOverview = () => {
                 {service.desc}
               </div>
               <button
-                className={`absolute right-5 bottom-5 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md transition-all duration-500
+                className={`
+                  absolute right-5 bottom-5 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md
+                  transition-all duration-500
                   ${
                     service.active
-                      ? 'bg-white text-[#f76f51] group-hover:bg-[#fff3ed] group-hover:text-[#e76f51]'
-                      : 'bg-[#222] text-white group-hover:bg-[#e76f51] group-hover:text-white'
+                      ? 'bg-[#e7401c] text-white'
+                      : 'bg-[#222] text-white group-hover:bg-[#e7401c] group-hover:text-white'
                   }
-                  group-hover:-translate-y-1
                 `}
               >
-                <span className='inline-block -rotate-45 transition-all duration-500 group-hover:scale-125'>
+                <span
+                  className={`inline-block transition-all duration-500
+                    ${service.active ? '' : ' -rotate-45 group-hover:rotate-0'}`}
+                >
                   ➔
                 </span>
               </button>
