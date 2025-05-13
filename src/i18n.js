@@ -18,6 +18,7 @@ const resources = {
 // Check if language is saved in localStorage
 const savedLanguage = localStorage.getItem("i18nextLng");
 
+// Initialize i18n
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

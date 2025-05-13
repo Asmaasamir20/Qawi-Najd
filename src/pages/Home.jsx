@@ -1,13 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-
+import HomeCover from './components/home/HomeCover';
+import AboutOverview from './components/about/AboutOverview';
+import ServiceOverview from './components/Services/ServiceOverview';
 const Home = () => {
-  const { t } = useTranslation();
-
   return (
-    <div className="min-h-screen">
-      <h1>{t('welcome')}</h1>
-    </div>
+    <>
+      <HomeCover />
+      <AboutOverview />
+      <ServiceOverview />
+    </>
   );
 };
 

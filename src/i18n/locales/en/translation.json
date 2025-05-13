@@ -1,7 +1,26 @@
 {
   "welcome": "Welcome to Qawi Najd",
   "language": "Language",
-  "request_quote": "Request a quote",
+  "request_quote": "Request Free Consultation",
+  "home": {
+    "company_name": "Qawi Najd",
+    "request_quote": "Request Quote",
+    "slide1": {
+      "title": "Welcome to Qawi Najd",
+      "description": "Your Trusted Partner in Construction and Development",
+      "highlight": "Qawi"
+    },
+    "slide2": {
+      "title": "High-Quality Construction",
+      "description": "Building Excellence with Precision and Care",
+      "highlight": "Quality"
+    },
+    "slide3": {
+      "title": "Innovative Solutions",
+      "description": "Turning Visions into Reality",
+      "highlight": "Innovative"
+    }
+  },
   "nav": {
     "home": "Home",
     "about": "About",
@@ -12,35 +31,69 @@
   },
   "navigation": {
     "home": "Home",
-    "about": "About",
+    "blog": "Blog",
     "services": "Services",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact Us"
   },
   "footer": {
-    "about": "A leading company in design and construction, we always strive to provide the best services to our valued customers",
+    "about": "A leading company in design and construction, we always strive to provide the best services to our valued clients",
     "usefulLinks": "Useful Links",
     "workingHours": "Working Hours",
-    "monToFri": "Mon to Fri",
+    "monToFri": "Monday to Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
     "closed": "Closed",
     "contactUs": "Contact Us",
-    "address": "250 Main Street, 2nd Floor.\nRiyadh, Saudi Arabia",
+    "address": "250 Main Street, 2nd Floor.\nRiyadh, Kingdom of Saudi Arabia",
     "copyright": "© All Rights Reserved",
-    "terms": "Terms and Conditions / Privacy Policy",
+    "terms": "Terms & Conditions / Privacy Policy",
     "newsletter": {
-      "title": "Subscribe to our newsletter,",
-      "subtitle": "Stay always in touch!",
-      "placeholder": "Enter Your Email",
+      "title": "Subscribe to Our Newsletter",
+      "subtitle": "Stay Connected!",
+      "placeholder": "Enter your email",
       "button": "Subscribe Now",
-      "terms": "I am accepted the",
+      "terms": "I accept the",
       "termsLink": "Terms & Conditions"
     },
-    "lattice": "Lattice",
+    "lattice": "Qawi Najd",
     "pricing_plan": "Pricing Plan",
-    "company_info": "250 Main Street, 2nd Floor.\nUSA, 56004",
-    "copyright_text": "©Designthemes all rights Reserved",
-    "terms_text": "Terms and conditions / Privacy policy"
+    "company_info": "250 Main Street, 2nd Floor.\nKingdom of Saudi Arabia, 56004",
+    "copyright_text": "© Theme Design All Rights Reserved",
+    "terms_text": "Terms & Conditions / Privacy Policy"
+  },
+  "about": {
+    "badge": "About Us",
+    "title": "Qawi Najd Engineering Consultancy",
+    "description": "We are a group of accredited engineering offices across the Kingdom, bringing together elite engineers specialized in providing integrated and innovative engineering solutions. We possess extensive experience in engineering consultancy, project management, and technical supervision of government, private, and tourism projects.",
+    "services": "Our Specialized Services",
+    "licensesTitle": "Licenses and Permits",
+    "licensesDescription": "We provide services for obtaining all types of engineering licenses and municipal permits, including:",
+    "satisfaction": "Client Satisfaction",
+    "experience": "Years of Experience",
+    "projects": "Completed Projects",
+    "features": {
+      "design": "Engineering Design",
+      "design_desc": "Professional preparation of interior and exterior designs",
+      "survey": "Engineering Survey",
+      "survey_desc": "High-precision land surveying and planning",
+      "project": "Project Management",
+      "project_desc": "Management of architectural and construction projects",
+      "license": "Licenses",
+      "license_desc": "Technical drawings submission and license documentation"
+    },
+    "licenses": {
+      "building": "Building licenses for residential units and commercial establishments",
+      "demolish": "Demolition and removal licenses according to regulatory requirements",
+      "renovation": "Renovation and architectural modification licenses",
+      "expansion": "Expansion and development permits for existing projects",
+      "all": "All types of engineering licenses and official permits"
+    },
+    "categories": {
+      "commercial": "Commercial",
+      "industrial": "Industrial",
+      "residential": "Residential",
+      "corporate": "Corporate"
+    }
   }
 }
