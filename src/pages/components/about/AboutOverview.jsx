@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import {
   FaBuilding,
   FaIndustry,
@@ -8,6 +9,7 @@ import {
   FaRegFileAlt,
   FaCheckCircle,
   FaArrowRight,
+  FaLightbulb,
 } from 'react-icons/fa';
 import { GiDemolish } from 'react-icons/gi';
 import { MdHomeRepairService } from 'react-icons/md';
@@ -16,6 +18,78 @@ import { TbArrowsDiagonal2 } from 'react-icons/tb';
 const AboutOverview = () => {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === 'ar';
+
+  // Animation variants - simplified
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.95,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 15,
+        duration: 0.8,
+      },
+    },
+  };
+
+  const circleVariants = {
+    hidden: {
+      scale: 0,
+      opacity: 0,
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 50,
+        damping: 20,
+        delay: 0.5,
+      },
+    },
+  };
+
+  const titleVariants = {
+    animate: {
+      scale: [1, 1.05, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      },
+    },
+  };
+
+  const iconVariants = {
+    animate: {
+      rotate: [0, 360],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: 'linear',
+      },
+    },
+  };
 
   // Features/services
   const features = [
@@ -98,14 +172,24 @@ const AboutOverview = () => {
             <div className='bg-white rounded-2xl w-full max-w-[500px] p-8 shadow-sm border border-gray-100'>
               <div className='flex flex-col gap-6'>
                 <div className='flex items-center gap-3'>
-                  <span className='inline-block bg-[#fff0ed] text-[#f03e2f] px-4 py-1 rounded-full text-xs font-bold'>
+                  <span className='inline-block bg-[#fff0ed] text-[#f03e2f] px-4 py-1 rounded-full text-md font-bold'>
                     {t('about.badge')}
                   </span>
                 </div>
                 <h2 className='text-2xl md:text-3xl font-extrabold text-gray-900 leading-snug'>
                   {t('about.title')}
                 </h2>
+
                 <p className='text-gray-600 text-base leading-relaxed'>{t('about.description')}</p>
+                <motion.p
+                  variants={itemVariants}
+                  className='text-gray-700 text-base  leading-relaxed mb-3 '
+                >
+                  {t(
+                    'about.commitment',
+                    'At "Qawi Najd", we are committed to quality, speed, and accuracy in delivering our services, to be the best engineering partner for your project success.'
+                  )}
+                </motion.p>
                 <div className='bg-[#f8f9fa] rounded-xl p-6'>
                   <h3 className='text-lg font-bold text-gray-800 mb-4'>{t('about.services')}</h3>
                   <ul className='space-y-3'>
@@ -152,7 +236,7 @@ const AboutOverview = () => {
                 <div className='text-sm text-gray-600'>{t('about.satisfaction')}</div>
               </div>
               <div className='bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100'>
-                <div className='text-3xl font-bold text-[#f03e2f] mb-2'>15+</div>
+                <div className='text-3xl font-bold text-[#f03e2f] mb-2'>20+</div>
                 <div className='text-sm text-gray-600'>{t('about.experience')}</div>
               </div>
               <div className='bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100'>
@@ -165,19 +249,84 @@ const AboutOverview = () => {
 
         {/* قسم التصنيفات */}
         <div className='mt-12'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
             {categories.map((cat, i) => (
               <div
                 key={i}
-                className='bg-white rounded-xl p-6 text-center shadow-sm border border-gray-100 hover:border-[#f03e2f] transition-colors'
+                className='group bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 text-center shadow-md border border-gray-100 hover:border-[#f03e2f] transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden'
               >
-                <div className='text-2xl mb-3'>{cat.icon}</div>
-                <div className='font-semibold text-gray-800'>{cat.label}</div>
+                <div className='absolute inset-0 bg-gradient-to-br from-[#f03e2f]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500'></div>
+                <div className='absolute -inset-1 bg-gradient-to-r from-[#f03e2f]/20 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500'></div>
+                <div className='relative z-10'>
+                  <div className='text-3xl mb-3 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 text-[#f03e2f]'>
+                    {cat.icon}
+                  </div>
+                  <div className='font-semibold text-gray-800 group-hover:text-[#f03e2f] transition-all duration-500 transform group-hover:translate-y-1'>
+                    {cat.label}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* قسم الرؤية */}
+      <motion.div
+        initial='hidden'
+        whileInView='visible'
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className='mt-20 relative'
+      >
+        <motion.div
+          variants={circleVariants}
+          className='absolute inset-0 bg-gradient-to-r from-[#f03e2f]/5 to-transparent rounded-3xl'
+        ></motion.div>
+        <div className='max-w-7xl mx-auto px-4'>
+          <motion.div
+            variants={itemVariants}
+            className='bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100 relative overflow-hidden'
+          >
+            <motion.div
+              variants={circleVariants}
+              className='absolute top-0 right-0 w-32 h-32 bg-[#f03e2f]/5 rounded-full -mr-16 -mt-16'
+            ></motion.div>
+            <motion.div
+              variants={circleVariants}
+              className='absolute bottom-0 left-0 w-32 h-32 bg-[#f03e2f]/5 rounded-full -ml-16 -mb-16'
+            ></motion.div>
+
+            <div className='relative z-10'>
+              <motion.div
+                variants={itemVariants}
+                className='flex items-center gap-3 mb-6'
+                animate='animate'
+              >
+                <motion.div variants={iconVariants} className='text-[#f03e2f] text-3xl'>
+                  <FaLightbulb />
+                </motion.div>
+                <motion.h2
+                  variants={titleVariants}
+                  className='text-3xl md:text-4xl font-bold text-gray-900'
+                >
+                  {t('about.vision.title', 'Our Vision')}
+                </motion.h2>
+              </motion.div>
+
+              <motion.p
+                variants={itemVariants}
+                className='text-gray-700 text-lg md:text-xl leading-relaxed mb-8 text-center max-w-4xl mx-auto'
+              >
+                {t(
+                  'about.vision.main',
+                  "To achieve a leading position for our offices on the map of the Kingdom and the region as diverse consulting offices that harness their energies and resources for growth and create distinctive value for their clients, employees, and all stakeholders, while playing their role in supporting the Kingdom's Vision 2030"
+                )}
+              </motion.p>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
     </div>
   );
 };
