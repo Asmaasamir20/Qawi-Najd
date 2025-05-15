@@ -14,6 +14,26 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
+    build: {
+      target: 'esnext',
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: isProduction,
+          drop_debugger: isProduction,
+        },
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
+            'ui-vendor': ['@headlessui/react', '@heroicons/react'],
+            'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000,
+    },
     plugins: [
       react({
         babel: {
@@ -68,6 +88,9 @@ export default defineConfig(({ mode }) => {
                   maxEntries: 60,
                   maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
                 },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
               },
             },
             {
@@ -79,6 +102,9 @@ export default defineConfig(({ mode }) => {
                   maxEntries: 60,
                   maxAgeSeconds: 60 * 60 * 24, // 24 hours
                 },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
               },
             },
             {
@@ -89,6 +115,9 @@ export default defineConfig(({ mode }) => {
                 expiration: {
                   maxEntries: 10,
                   maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
                 },
               },
             },
@@ -102,10 +131,14 @@ export default defineConfig(({ mode }) => {
       compression({
         algorithm: 'gzip',
         ext: '.gz',
+        threshold: 1024,
+        deleteOriginalAssets: false,
       }),
       compression({
         algorithm: 'brotliCompress',
         ext: '.br',
+        threshold: 1024,
+        deleteOriginalAssets: false,
       }),
       imagemin({
         gifsicle: {
@@ -116,10 +149,11 @@ export default defineConfig(({ mode }) => {
           optimizationLevel: 7,
         },
         mozjpeg: {
-          quality: 80,
+          quality: 75,
+          progressive: true,
         },
         pngquant: {
-          quality: [0.8, 0.9],
+          quality: [0.7, 0.8],
           speed: 4,
         },
         svgo: {
@@ -133,6 +167,10 @@ export default defineConfig(({ mode }) => {
               active: false,
             },
           ],
+        },
+        webp: {
+          quality: 75,
+          method: 6,
         },
       }),
     ],
@@ -148,6 +186,20 @@ export default defineConfig(({ mode }) => {
         '@utils': path.resolve(__dirname, './src/utils'),
       },
     },
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@headlessui/react',
+        '@heroicons/react',
+        'i18next',
+        'react-i18next',
+        'i18next-browser-languagedetector',
+      ],
+      exclude: [],
+      force: true,
+    },
     server: {
       port: 3001,
       strictPort: true,
@@ -156,80 +208,9 @@ export default defineConfig(({ mode }) => {
       hmr: {
         overlay: true,
       },
-    },
-    build: {
-      target: 'esnext',
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: mode === 'production',
-          drop_debugger: mode === 'production',
-          pure_funcs: mode === 'production' ? ['console.log'] : [],
-        },
-        mangle: {
-          safari10: true,
-        },
-        format: {
-          comments: false,
-        },
+      watch: {
+        usePolling: true,
       },
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'ui-vendor': ['@headlessui/react', '@heroicons/react', 'lucide-react'],
-            'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
-            'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
-            'animation-vendor': ['framer-motion', 'swiper'],
-          },
-          chunkFileNames: 'assets/js/[name]-[hash].js',
-          entryFileNames: 'assets/js/[name]-[hash].js',
-          assetFileNames: ({ name }) => {
-            if (/\.(gif|jpe?g|png|svg|webp|avif)$/.test(name ?? '')) {
-              return 'assets/images/[name]-[hash][extname]';
-            }
-            if (/\.(woff2?|eot|ttf|otf)$/.test(name ?? '')) {
-              return 'assets/fonts/[name]-[hash][extname]';
-            }
-            if (/\.css$/.test(name ?? '')) {
-              return 'assets/css/[name]-[hash][extname]';
-            }
-            return 'assets/[name]-[hash][extname]';
-          },
-        },
-      },
-      chunkSizeWarningLimit: 1000,
-      sourcemap: mode !== 'production',
-      cssCodeSplit: true,
-      reportCompressedSize: false,
-      modulePreload: {
-        polyfill: true,
-      },
-    },
-    preview: {
-      port: 3001,
-      strictPort: true,
-      host: true,
-    },
-    css: {
-      devSourcemap: mode !== 'production',
-      modules: {
-        localsConvention: 'camelCase',
-      },
-    },
-    optimizeDeps: {
-      include: [
-        'react',
-        'react-dom',
-        'react-router-dom',
-        '@headlessui/react',
-        '@heroicons/react',
-        'lucide-react',
-        'framer-motion',
-        'swiper',
-        'i18next',
-        'react-i18next',
-      ],
     },
   };
 });

@@ -3,7 +3,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Phone, ArrowUpRight, Globe2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import logoAr from '../../assets/images/logo/2.svg';
 import logoEn from '../../assets/images/logo/4.svg';
 
@@ -60,6 +62,7 @@ const LANGUAGES = [
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
   const [lang, setLang] = useState(() => {
     // استرجاع اللغة من localStorage أو استخدام اللغة الافتراضية
     return localStorage.getItem('i18nextLng') || 'ar';
@@ -70,7 +73,7 @@ export default function Navbar() {
   useEffect(() => {
     const savedLang = localStorage.getItem('i18nextLng');
     if (savedLang) {
-      i18n.changeLanguage(savedLang);
+      i18n.changeLanguage(savedLang).catch(console.error);
       setLang(savedLang);
     }
     setIsLoading(false);
@@ -84,69 +87,100 @@ export default function Navbar() {
     }
   }, [lang, isLoading]);
 
-  const handleLangSwitch = (code) => {
-    setIsLoading(true);
-    i18n.changeLanguage(code).then(() => {
+  const handleLangSwitch = async (code) => {
+    try {
+      setIsLoading(true);
+      await i18n.changeLanguage(code);
       localStorage.setItem('i18nextLng', code);
       setLang(code);
+    } catch (error) {
+      console.error('Error changing language:', error);
+    } finally {
       setIsLoading(false);
-    });
+    }
   };
 
   if (isLoading) {
     return (
       <div className='bg-[#f5f9f9] h-20 flex items-center justify-center'>
-        <div className='animate-pulse flex space-x-4'>
-          <div className='h-16 w-[140px] bg-gray-200 rounded'></div>
-        </div>
+        <LoadingSpinner size='md' />
       </div>
     );
   }
 
   return (
-    <Disclosure as='nav' className='bg-[#f5f9f9]'>
+    <Disclosure as='nav' className='bg-[#f5f9f9] sticky top-0 z-50 shadow-sm'>
       {({ open, close }) => (
         <>
-          <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+          <motion.div
+            className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className='flex h-20 justify-between items-center'>
               {/* Logo */}
-              <div className='relative h-14 w-[120px]'>
-                <Suspense
-                  fallback={
-                    <div className='absolute inset-0 bg-gray-200 animate-pulse rounded'></div>
-                  }
-                >
-                  <img
-                    src={lang === 'ar' ? logoAr : logoEn}
-                    alt='Qiwa Najd Logo'
-                    className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto object-contain'
-                    loading='eager'
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = lang === 'ar' ? logoAr : logoEn;
-                    }}
-                  />
-                </Suspense>
-              </div>
+              <motion.div
+                className='relative h-14 w-[120px]'
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <Link to='/'>
+                  <Suspense fallback={<LoadingSpinner size='sm' />}>
+                    <img
+                      src={lang === 'ar' ? logoAr : logoEn}
+                      alt='Qiwa Najd Logo'
+                      className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto object-contain'
+                      loading='eager'
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = lang === 'ar' ? logoAr : logoEn;
+                      }}
+                    />
+                  </Suspense>
+                </Link>
+              </motion.div>
 
               {/* Navigation */}
-              <div className='hidden md:flex gap-6'>
+              <div className='hidden lg:flex gap-6'>
                 {navigation.map((item) => (
-                  <Link
+                  <motion.div
                     key={item.nameKey}
-                    to={item.to}
-                    className={`text-black text-sm font-medium hover:text-[#F03E2F] transition px-2 ${
-                      lang === 'ar' ? 'font-arabic' : 'font-english'
-                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
                   >
-                    {t(item.nameKey)}
-                  </Link>
+                    <Link
+                      to={item.to}
+                      className={`relative text-sm font-medium transition px-2 ${
+                        lang === 'ar' ? 'font-arabic' : 'font-english'
+                      } ${
+                        location.pathname === item.to ||
+                        (item.to !== '/' && location.pathname.startsWith(item.to))
+                          ? 'text-[#F03E2F] font-bold'
+                          : 'text-black hover:text-[#F03E2F]'
+                      }`}
+                    >
+                      {t(item.nameKey)}
+                      {(location.pathname === item.to ||
+                        (item.to !== '/' && location.pathname.startsWith(item.to))) && (
+                        <motion.span
+                          className='absolute -bottom-1 left-0 w-full h-0.5 bg-[#F03E2F] rounded-full'
+                          layoutId='navIndicator'
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
+
               {/* Actions */}
-              <div className='hidden md:flex items-center gap-4'>
+              <div className='hidden lg:flex items-center gap-4'>
                 {/* Phone */}
-                <div className='flex items-center gap-2'>
+                <motion.div
+                  className='flex items-center gap-2'
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
                   <span className='flex items-center justify-center w-8 h-8 rounded-full bg-white shadow text-black'>
                     <Phone size={16} />
                   </span>
@@ -157,54 +191,71 @@ export default function Navbar() {
                   >
                     +89(0) 1256 2156
                   </span>
-                </div>
+                </motion.div>
+
                 {/* Request a quote */}
-                <Link
-                  to='/quote'
-                  className={`flex items-center border border-black rounded-full px-3 py-1 bg-white hover:bg-gray-50 transition group ${
-                    lang === 'ar' ? 'flex-row-reverse' : ''
-                  }`}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <span
-                    className={`font-medium text-black text-sm ${lang === 'ar' ? 'mr-2' : 'mr-2'}`}
+                  <Link
+                    to='/quote'
+                    className={`flex items-center border border-black rounded-full px-3 py-1 bg-white hover:bg-gray-50 transition group ${
+                      lang === 'ar' ? 'flex-row-reverse' : ''
+                    }`}
                   >
-                    {t('request_quote')}
-                  </span>
-                  <span className='flex items-center justify-center w-5 h-5 rounded-full bg-[#F03E2F] text-white group-hover:bg-red-700 transition'>
-                    <ArrowUpRight size={12} />
-                  </span>
-                </Link>
-                {/* Language Switcher - Toggle Switch */}
-                <div className='hidden md:block'>
-                  <div className='flex items-center gap-2 bg-white p-1 rounded-full shadow-sm border border-gray-100'>
-                    <button
+                    <span
+                      className={`font-medium text-black text-sm ${lang === 'ar' ? 'mr-2' : 'mr-2'}`}
+                    >
+                      {t('request_quote')}
+                    </span>
+                    <motion.span
+                      className='flex items-center justify-center w-5 h-5 rounded-full bg-[#F03E2F] text-white group-hover:bg-red-700 transition'
+                      whileHover={{ rotate: 45 }}
+                    >
+                      <ArrowUpRight size={12} />
+                    </motion.span>
+                  </Link>
+                </motion.div>
+
+                {/* Language Switcher */}
+                <div className='hidden lg:block'>
+                  <motion.div
+                    className='flex items-center gap-2 bg-white p-1 rounded-full shadow-sm border border-gray-100'
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <motion.button
                       onClick={() => handleLangSwitch('ar')}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
                         lang === 'ar'
                           ? 'bg-[#F03E2F] text-white shadow-sm'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span className='text-base'>{LANGUAGES[0].flag}</span>
                       <span className='text-xs font-medium'>العربية</span>
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
                       onClick={() => handleLangSwitch('en')}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
                         lang === 'en'
                           ? 'bg-[#F03E2F] text-white shadow-sm'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span className='text-base'>{LANGUAGES[1].flag}</span>
                       <span className='text-xs font-medium'>English</span>
-                    </button>
-                  </div>
+                    </motion.button>
+                  </motion.div>
                 </div>
               </div>
+
               {/* Mobile menu button */}
-              <div className='flex md:hidden'>
-                <Disclosure.Button className='inline-flex items-center justify-center rounded-md p-1.5 text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500'>
+              <motion.div className='flex lg:hidden' whileTap={{ scale: 0.95 }}>
+                <Disclosure.Button className='inline-flex items-center justify-center rounded-lg p-1.5 text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500'>
                   <span className='sr-only'>Open main menu</span>
                   {open ? (
                     <XMarkIcon className='block h-5 w-5' aria-hidden='true' />
@@ -212,80 +263,108 @@ export default function Navbar() {
                     <Bars3Icon className='block h-5 w-5' aria-hidden='true' />
                   )}
                 </Disclosure.Button>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Mobile menu */}
-          <Disclosure.Panel className='md:hidden bg-[#f5f9f9]'>
-            <div className='flex flex-col gap-1.5 px-4 pt-3 pb-2'>
-              {navigation.map((item) => (
-                <Link
-                  key={item.nameKey}
-                  to={item.to}
-                  className='block text-black font-medium hover:text-[#F03E2F] px-2 py-1.5 rounded-md text-sm'
-                  onClick={() => open && close()}
-                >
-                  {t(item.nameKey)}
-                </Link>
-              ))}
-              {/* Phone & Quote & Lang in mobile */}
-              <div className='flex flex-col gap-2 mt-3'>
-                <div className='flex items-center gap-2'>
-                  <span className='flex items-center justify-center w-8 h-8 rounded-full bg-white shadow text-black'>
-                    <Phone size={16} />
-                  </span>
-                  <span className='font-medium text-black text-sm tracking-wide'>
-                    +89(0) 1256 2156
-                  </span>
-                </div>
-                <Link
-                  to='/quote'
-                  onClick={() => open && close()}
-                  className={`flex items-center justify-between border border-black rounded-full px-3 py-1.5 bg-white hover:bg-gray-50 transition group w-full text-sm font-bold ${
-                    lang === 'ar' ? 'flex-row-reverse' : ''
-                  }`}
-                >
-                  <span className='flex items-center justify-center w-6 h-6 rounded-full bg-[#F03E2F] text-white group-hover:bg-red-700 transition'>
-                    <ArrowUpRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
-                  </span>
-                  <span className={`text-black ${lang === 'ar' ? 'ml-2' : 'mr-2'}`}>
-                    {t('request_quote')}
-                  </span>
-                </Link>
+          <AnimatePresence>
+            {open && (
+              <Disclosure.Panel
+                as={motion.div}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className='lg:hidden bg-[#f5f9f9] overflow-hidden'
+              >
+                <div className='flex flex-col gap-1.5 px-4 pt-3 pb-2'>
+                  {navigation.map((item) => (
+                    <motion.div
+                      key={item.nameKey}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Link
+                        to={item.to}
+                        className={`block relative font-medium px-2 py-1.5 rounded-lg text-sm ${
+                          location.pathname === item.to ||
+                          (item.to !== '/' && location.pathname.startsWith(item.to))
+                            ? 'text-[#F03E2F] font-bold bg-red-50'
+                            : 'text-black hover:text-[#F03E2F] hover:bg-gray-50'
+                        }`}
+                        onClick={() => open && close()}
+                      >
+                        {t(item.nameKey)}
+                      </Link>
+                    </motion.div>
+                  ))}
 
-                {/* Language Switcher - Toggle Switch for Mobile */}
-                <div className='flex items-center justify-center gap-2 mt-3'>
-                  <div className='flex items-center gap-2 bg-white p-1 rounded-full shadow-sm border border-gray-100'>
-                    <Disclosure.Button
-                      as='button'
-                      onClick={() => handleLangSwitch('ar')}
-                      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
-                        lang === 'ar'
-                          ? 'bg-[#F03E2F] text-white shadow-sm'
-                          : 'text-gray-600 hover:bg-gray-50'
+                  {/* Mobile actions */}
+                  <motion.div
+                    className='flex flex-col gap-2 mt-3'
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                  >
+                    <div className='flex items-center gap-2'>
+                      <span className='flex items-center justify-center w-8 h-8 rounded-full bg-white shadow text-black'>
+                        <Phone size={16} />
+                      </span>
+                      <span className='font-medium text-black text-sm tracking-wide'>
+                        +89(0) 1256 2156
+                      </span>
+                    </div>
+                    <Link
+                      to='/quote'
+                      onClick={() => open && close()}
+                      className={`flex items-center justify-between border border-black rounded-full px-3 py-1.5 bg-white hover:bg-gray-50 transition group w-full text-sm font-bold ${
+                        lang === 'ar' ? 'flex-row-reverse' : ''
                       }`}
                     >
-                      <span className='text-base'>{LANGUAGES[0].flag}</span>
-                      <span className='text-xs font-medium'>العربية</span>
-                    </Disclosure.Button>
-                    <Disclosure.Button
-                      as='button'
-                      onClick={() => handleLangSwitch('en')}
-                      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
-                        lang === 'en'
-                          ? 'bg-[#F03E2F] text-white shadow-sm'
-                          : 'text-gray-600 hover:bg-gray-50'
-                      }`}
-                    >
-                      <span className='text-base'>{LANGUAGES[1].flag}</span>
-                      <span className='text-xs font-medium'>English</span>
-                    </Disclosure.Button>
-                  </div>
+                      <span className='flex items-center justify-center w-6 h-6 rounded-full bg-[#F03E2F] text-white group-hover:bg-red-700 transition'>
+                        <ArrowUpRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
+                      </span>
+                      <span className={`text-black ${lang === 'ar' ? 'ml-2' : 'mr-2'}`}>
+                        {t('request_quote')}
+                      </span>
+                    </Link>
+
+                    {/* Language Switcher - Toggle Switch for Mobile */}
+                    <div className='flex items-center justify-center gap-2 mt-3'>
+                      <div className='flex items-center gap-2 bg-white p-1 rounded-full shadow-sm border border-gray-100'>
+                        <Disclosure.Button
+                          as='button'
+                          onClick={() => handleLangSwitch('ar')}
+                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
+                            lang === 'ar'
+                              ? 'bg-[#F03E2F] text-white shadow-sm'
+                              : 'text-gray-600 hover:bg-gray-50'
+                          }`}
+                        >
+                          <span className='text-base'>{LANGUAGES[0].flag}</span>
+                          <span className='text-xs font-medium'>العربية</span>
+                        </Disclosure.Button>
+                        <Disclosure.Button
+                          as='button'
+                          onClick={() => handleLangSwitch('en')}
+                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 ${
+                            lang === 'en'
+                              ? 'bg-[#F03E2F] text-white shadow-sm'
+                              : 'text-gray-600 hover:bg-gray-50'
+                          }`}
+                        >
+                          <span className='text-base'>{LANGUAGES[1].flag}</span>
+                          <span className='text-xs font-medium'>English</span>
+                        </Disclosure.Button>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
-              </div>
-            </div>
-          </Disclosure.Panel>
+              </Disclosure.Panel>
+            )}
+          </AnimatePresence>
         </>
       )}
     </Disclosure>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Blog = () => {
   const { t } = useTranslation();
@@ -10,10 +12,12 @@ const Blog = () => {
         {/* Featured Article */}
         <div className='mb-12'>
           <article className='bg-white rounded-xl shadow-sm overflow-hidden'>
-            <img
+            <LazyLoadImage
               src='/src/assets/images/blog/featured.jpg'
               alt='مقال مميز'
+              effect='blur'
               className='w-full h-[400px] object-cover'
+              placeholderSrc='/src/assets/images/placeholder.png'
             />
             <div className='p-8'>
               <div className='flex items-center gap-4 mb-4'>
@@ -50,10 +54,12 @@ const Blog = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           {/* Article 1 */}
           <article className='bg-white rounded-lg shadow-sm overflow-hidden'>
-            <img
+            <LazyLoadImage
               src='/src/assets/images/blog/article1.jpg'
               alt='مقال عن التصميم المعماري'
+              effect='blur'
               className='w-full h-48 object-cover'
+              placeholderSrc='/src/assets/images/placeholder.png'
             />
             <div className='p-6'>
               <div className='flex items-center gap-4 mb-3'>
@@ -72,10 +78,12 @@ const Blog = () => {
 
           {/* Article 2 */}
           <article className='bg-white rounded-lg shadow-sm overflow-hidden'>
-            <img
+            <LazyLoadImage
               src='/src/assets/images/blog/article2.jpg'
               alt='مقال عن إدارة المشاريع'
+              effect='blur'
               className='w-full h-48 object-cover'
+              placeholderSrc='/src/assets/images/placeholder.png'
             />
             <div className='p-6'>
               <div className='flex items-center gap-4 mb-3'>
@@ -94,10 +102,12 @@ const Blog = () => {
 
           {/* Article 3 */}
           <article className='bg-white rounded-lg shadow-sm overflow-hidden'>
-            <img
+            <LazyLoadImage
               src='/src/assets/images/blog/article3.jpg'
               alt='مقال عن البناء المستدام'
+              effect='blur'
               className='w-full h-48 object-cover'
+              placeholderSrc='/src/assets/images/placeholder.png'
             />
             <div className='p-6'>
               <div className='flex items-center gap-4 mb-3'>
@@ -116,10 +126,12 @@ const Blog = () => {
 
           {/* Article 4 */}
           <article className='bg-white rounded-lg shadow-sm overflow-hidden'>
-            <img
+            <LazyLoadImage
               src='/src/assets/images/blog/article4.jpg'
               alt='مقال عن التصميم الداخلي'
+              effect='blur'
               className='w-full h-48 object-cover'
+              placeholderSrc='/src/assets/images/placeholder.png'
             />
             <div className='p-6'>
               <div className='flex items-center gap-4 mb-3'>

@@ -94,6 +94,10 @@
       "industrial": "Industrial",
       "residential": "Residential",
       "corporate": "Corporate"
+    },
+    "vision": {
+      "title": "Our Vision",
+      "main": "To achieve a leading position for our offices on the map of the Kingdom and the region as diverse consulting offices that harness their energies and resources for growth and create distinctive value for their clients, employees, and all stakeholders, while playing their role in supporting the Kingdom's Vision 2030"
     }
   }
 }

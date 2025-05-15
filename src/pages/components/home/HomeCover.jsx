@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
-import Button from '../../../components/ui/Button';
+import { Button } from '../../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import styles from './HomeCover.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,16 @@ const images = import.meta.glob('../../../assets/images/home/*.jpeg', { eager: t
 const image1 = images['../../../assets/images/home/1.jpeg'];
 const image2 = images['../../../assets/images/home/2.jpeg'];
 const image3 = images['../../../assets/images/home/3.jpeg'];
+
+// Preload images
+const preloadImage = (src) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+};
 
 // Define slides array with translation keys
 const slides = [
@@ -92,6 +102,19 @@ const HomeCover = memo(() => {
     navigate('/quote');
   };
 
+  // Preload next image
+  useEffect(() => {
+    if (nextSlideIndex !== null) {
+      preloadImage(nextContent.image);
+    }
+  }, [nextSlideIndex, nextContent]);
+
+  // Initial preload of first two images
+  useEffect(() => {
+    preloadImage(slides[0].image);
+    preloadImage(slides[1].image);
+  }, []);
+
   return (
     <section
       dir={isRTL ? 'rtl' : 'ltr'}
@@ -107,6 +130,8 @@ const HomeCover = memo(() => {
           backgroundRepeat: 'no-repeat',
           opacity: isTransitioning ? 0.9 : 1,
           filter: isTransitioning ? 'brightness(0.95)' : 'brightness(1)',
+          willChange: 'transform, opacity',
+          transform: 'translateZ(0)',
         }}
       />
       {nextSlideIndex !== null && (
@@ -119,6 +144,8 @@ const HomeCover = memo(() => {
             backgroundRepeat: 'no-repeat',
             opacity: isTransitioning ? 0.1 : 0,
             filter: isTransitioning ? 'brightness(1.05)' : 'brightness(1)',
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)',
           }}
         />
       )}
