@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node copy-assets.js && vite build",
     "lint": "eslint . --ext .js,.jsx --fix",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx,css,md}\"",
     "analyze": "vite build --mode analyze",
     "test": "vitest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "copy-assets": "node copy-assets.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

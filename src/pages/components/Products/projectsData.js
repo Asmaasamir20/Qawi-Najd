@@ -11,7 +11,7 @@ const projectCategories = {
   },
 };
 
-// Import images using import.meta.url to get proper URL handling by Vite
+// Import images using a more production-friendly approach
 const getImageUrl = (path) => {
   if (!path) {
     console.error('Missing image path');
@@ -20,9 +20,12 @@ const getImageUrl = (path) => {
   }
 
   try {
-    // Use a more direct path approach instead of URL constructor
-    // This works better with Vite's import handling
-    return `/src/assets/images/projects/${path}`;
+    // First check if we're in development and use the source path
+    if (import.meta.env.DEV) {
+      return `/src/assets/images/projects/${path}`;
+    }
+    // Use the public URL pattern for assets in production
+    return `/assets/images/projects/${path}`;
   } catch (error) {
     console.error(`Error processing image path: ${path}`, error);
     return '/images/placeholder.png';

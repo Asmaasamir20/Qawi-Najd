@@ -33,6 +33,9 @@ export default defineConfig(({ mode }) => {
         },
       },
       chunkSizeWarningLimit: 1000,
+      assetsDir: 'assets',
+      emptyOutDir: true,
+      copyPublicDir: true,
     },
     plugins: [
       react({
@@ -59,8 +62,8 @@ export default defineConfig(({ mode }) => {
               src: '/src/assets/images/logo/Capture.webp',
               sizes: '192x192 512x512',
               type: 'image/webp',
-              purpose: 'any maskable'
-            }
+              purpose: 'any maskable',
+            },
           ],
           dir: 'rtl',
           lang: 'ar',
@@ -195,8 +198,8 @@ export default defineConfig(({ mode }) => {
       force: true,
     },
     server: {
-      port: 3001,
-      strictPort: true,
+      port: 4000,
+      strictPort: false,
       host: true,
       cors: true,
       hmr: {
