@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => {
       }),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['images/icons/icon-192.png', 'images/icons/icon-512.png'],
+        includeAssets: [],
         manifest: {
           name: 'قوَى نَجْد للاستشارات الهندسية',
           short_name: 'قوَى نَجْد',
@@ -57,16 +57,10 @@ export default defineConfig(({ mode }) => {
           icons: [
             {
               src: '/src/assets/images/logo/Capture.webp',
-              sizes: '192x192',
+              sizes: '192x192 512x512',
               type: 'image/webp',
-              purpose: 'any maskable',
-            },
-            {
-              src: 'images/icons/icon-512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any maskable',
-            },
+              purpose: 'any maskable'
+            }
           ],
           dir: 'rtl',
           lang: 'ar',

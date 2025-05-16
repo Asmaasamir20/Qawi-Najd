@@ -115,12 +115,14 @@ const ProductsOverview = () => {
 
   // Create an array of image objects for the lightbox
   const lightboxImages = useMemo(() => {
-    return filteredProjects.map((project) => ({
-      src: `/src/assets/images/projects/${project.type}/${project.src}`,
-      alt: project.title,
-      title: project.title,
-      description: project.category ? project.category.title : '',
-    }));
+    return filteredProjects
+      .filter((project) => project && project.id) // Filter out invalid projects
+      .map((project) => ({
+        src: project.src || '/images/placeholder.png',
+        alt: project.title || 'Project image',
+        title: project.title || '',
+        description: project.category ? project.category.title : '',
+      }));
   }, [filteredProjects]);
 
   const handleLoadMore = () => {
@@ -290,45 +292,48 @@ const ProductsOverview = () => {
                 className='my-masonry-grid'
                 columnClassName='my-masonry-grid_column'
               >
-                {filteredProjects.slice(0, visibleItems).map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    className='group relative overflow-hidden rounded-xl cursor-pointer'
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                    onClick={() => openLightbox(index)}
-                    style={{ height: getProjectHeight(index) }}
-                  >
-                    <div className='relative h-full w-full overflow-hidden rounded-xl'>
-                      <LazyLoadImage
-                        src={`/src/assets/images/projects/${project.type}/${project.src}`}
-                        alt={project.title}
-                        effect='opacity'
-                        className='w-full h-full object-cover rounded-xl transform transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform group-hover:scale-110'
-                        placeholder={<SkeletonPlaceholder />}
-                        wrapperClassName='w-full h-full'
-                        onError={(e) => {
-                          console.error(`Failed to load image: ${project.src}`);
-                          e.target.onerror = null;
-                          e.target.src = '/src/assets/images/placeholder.png';
-                        }}
-                      />
-                      <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl'>
-                        <div className='absolute bottom-0 right-0 w-full p-6 text-right transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]'>
-                          <h3 className='text-white text-xl font-bold mb-3 transform -translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-[50ms] ease-[cubic-bezier(0.4,0,0.2,1)]'>
-                            {project.title}
-                          </h3>
-                          {project.category && (
-                            <p className='text-white/80 text-sm transform -translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-[100ms] ease-[cubic-bezier(0.4,0,0.2,1)]'>
-                              {project.category.title}
-                            </p>
-                          )}
+                {filteredProjects
+                  .filter((project) => project && project.id) // Filter out any invalid projects
+                  .slice(0, visibleItems)
+                  .map((project, index) => (
+                    <motion.div
+                      key={project.id}
+                      className='group relative overflow-hidden rounded-xl cursor-pointer'
+                      variants={itemVariants}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                      onClick={() => openLightbox(index)}
+                      style={{ height: getProjectHeight(index) }}
+                    >
+                      <div className='relative h-full w-full overflow-hidden rounded-xl'>
+                        <LazyLoadImage
+                          src={project.src ? project.src : '/images/placeholder.png'}
+                          alt={project.title || 'Project image'}
+                          effect='opacity'
+                          className='w-full h-full object-cover rounded-xl transform transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform group-hover:scale-110'
+                          placeholder={<SkeletonPlaceholder />}
+                          wrapperClassName='w-full h-full'
+                          onError={(e) => {
+                            console.error(`Failed to load image: ${project.src}`);
+                            e.target.onerror = null;
+                            e.target.src = '/images/placeholder.png';
+                          }}
+                        />
+                        <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl'>
+                          <div className='absolute bottom-0 right-0 w-full p-6 text-right transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]'>
+                            <h3 className='text-white text-xl font-bold mb-3 transform -translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-[50ms] ease-[cubic-bezier(0.4,0,0.2,1)]'>
+                              {project.title}
+                            </h3>
+                            {project.category && (
+                              <p className='text-white/80 text-sm transform -translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-[100ms] ease-[cubic-bezier(0.4,0,0.2,1)]'>
+                                {project.category.title}
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
               </Masonry>
             </AnimatePresence>
           </motion.div>
@@ -349,7 +354,7 @@ const ProductsOverview = () => {
               />
             ),
             iconPrev: () => (
-              <button className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
+              <div className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
@@ -363,10 +368,10 @@ const ProductsOverview = () => {
                 >
                   <path d='m15 18-6-6 6-6' />
                 </svg>
-              </button>
+              </div>
             ),
             iconNext: () => (
-              <button className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
+              <div className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
@@ -380,10 +385,10 @@ const ProductsOverview = () => {
                 >
                   <path d='m9 18 6-6-6-6' />
                 </svg>
-              </button>
+              </div>
             ),
             iconClose: () => (
-              <button className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
+              <div className='bg-black/30 backdrop-blur-sm p-2 rounded-full text-white'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
@@ -398,7 +403,7 @@ const ProductsOverview = () => {
                   <path d='M18 6 6 18' />
                   <path d='m6 6 12 12' />
                 </svg>
-              </button>
+              </div>
             ),
           }}
           carousel={{
