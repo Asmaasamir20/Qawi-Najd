@@ -1,13 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import ServiceOverview from './components/Services/ServiceOverview';
+import HeroSection from './HeroSection';
 
 const Services = () => {
-  const { t } = useTranslation();
+ 
 
   return (
-    <div className="min-h-screen">
-      <h1>{t('navigation.services')}</h1>
-    </div>
+    <>
+      <div className='m-4'>
+        <HeroSection
+          backgroundImage='/src/assets/images/home/2.jpeg'
+          title='خدماتنا المتنوعة'
+          subtitle='نقدم أفضل الخدمات المتنوعة لتلبية احتياجاتك المتنوعة'
+        />
+      </div>
+      <ServiceOverview/>
+    </>
   );
 };
 

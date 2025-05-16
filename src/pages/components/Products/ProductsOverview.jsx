@@ -12,7 +12,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const ProductsOverview = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [visibleItems, setVisibleItems] = useState(13);
+  const [visibleItems, setVisibleItems] = useState(15);
   const [isLoading, setIsLoading] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -117,13 +117,14 @@ const ProductsOverview = () => {
   const lightboxImages = useMemo(() => {
     return filteredProjects
       .filter((project) => project && project.id) // Filter out invalid projects
+      .slice(0, visibleItems) // Only use visible projects
       .map((project) => ({
         src: project.src || '/images/placeholder.png',
         alt: project.title || 'Project image',
         title: project.title || '',
         description: project.category ? project.category.title : '',
       }));
-  }, [filteredProjects]);
+  }, [filteredProjects, visibleItems]); // Add visibleItems as dependency
 
   const handleLoadMore = () => {
     setVisibleItems((prev) => Math.min(prev + ITEMS_PER_LOAD, filteredProjects.length));
@@ -314,9 +315,15 @@ const ProductsOverview = () => {
                           placeholder={<SkeletonPlaceholder />}
                           wrapperClassName='w-full h-full'
                           onError={(e) => {
-                            console.error(`Failed to load image: ${project.src}`);
-                            e.target.onerror = null;
-                            e.target.src = '/images/placeholder.png';
+                            // Silently handle error without logging to avoid any console errors
+                            if (e && e.target) {
+                              e.target.onerror = null;
+                              try {
+                                e.target.src = '/images/placeholder.png';
+                              } catch (_) {
+                                // Ignore any errors when setting fallback
+                              }
+                            }
                           }}
                         />
                         <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl'>
@@ -351,6 +358,12 @@ const ProductsOverview = () => {
                 src={slide.src}
                 alt={slide.alt || ''}
                 className='max-h-[90vh] max-w-full object-contain'
+                onError={(e) => {
+                  if (e && e.target) {
+                    e.target.onerror = null;
+                    e.target.src = '/images/placeholder.png';
+                  }
+                }}
               />
             ),
             iconPrev: () => (
