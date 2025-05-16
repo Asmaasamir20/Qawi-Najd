@@ -10,7 +10,7 @@ const Projects = () => {
     <>
       <div className='m-4'>
         <HeroSection
-          backgroundImage='/src/assets/images/home/3.jpeg'
+          backgroundImage='../assets/images/home/3.jpeg'
           title='معرض أعمالنا'
           subtitle='نفخر بتقديم مجموعة من مشاريعنا المميزة في مجال المساحة و الاستشارات الهندسية'
         />

@@ -10,12 +10,12 @@ const Services = () => {
     <>
       <div className='m-4'>
         <HeroSection
-          backgroundImage='/src/assets/images/home/2.jpeg'
+          backgroundImage='../assets/images/home/2.jpeg'
           title='خدماتنا المتنوعة'
           subtitle='نقدم أفضل الخدمات المتنوعة لتلبية احتياجاتك المتنوعة'
         />
       </div>
-      <ServiceOverview/>
+      <ServiceOverview />
     </>
   );
 };
