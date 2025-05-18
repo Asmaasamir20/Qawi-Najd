@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { projects, projectCategories } from './projectsData';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { motion, AnimatePresence } from 'framer-motion';
-import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 import Lightbox from 'yet-another-react-lightbox';
 import Skeleton from 'react-loading-skeleton';
 import Masonry from 'react-masonry-css';
