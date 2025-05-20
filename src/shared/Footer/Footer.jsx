@@ -316,7 +316,7 @@ const Footer = () => {
                   <span className='text-white font-medium block mb-1'>
                     {isRTL ? 'البريد الإلكتروني' : 'Email'}
                   </span>
-                  <span className='text-gray-400'>example@gmail.com</span>
+                  <span className='text-gray-400'>info@qiwanagd.com</span>
                 </div>
               </div>
 
@@ -328,7 +328,7 @@ const Footer = () => {
                   <span className='text-white font-medium block mb-1'>
                     {isRTL ? 'الهاتف' : 'Phone'}
                   </span>
-                  <span className='text-gray-400'>+89(0) 1256 2156</span>
+                  <span className='text-gray-400'>+966 54 824 0556</span>
                 </div>
               </div>
             </div>

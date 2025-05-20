@@ -2,12 +2,17 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta
       name="description"
-      content="قوَى نَجْد للاستشارات الهندسية - شركة رائدة في مجال التصميم والبناء، نسعى دائماً لتقديم أفضل الخدمات لعملائنا الكرام"
+      content="Qiwanagd للاستشارات الهندسية - شركة رائدة في مجال التصميم والبناء، نسعى دائماً لتقديم أفضل الخدمات لعملائنا الكرام"
     />
     <meta name="theme-color" content="#F03E2F" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;"
+    />
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <base href="/" />
 
     <!-- تحميل الخطوط بشكل مُحسن -->
@@ -30,7 +35,7 @@
     <link rel="icon" type="image/x-icon" href="/src/assets/images/logo/Capture.webp" />
     <link rel="apple-touch-icon" href="/src/assets/images/logo/Capture.webp" />
 
-    <title>قوَى نَجْد للاستشارات الهندسية</title>
+    <title>Qiwanagd للاستشارات الهندسية</title>
     <style>
       /* تقنية React لإعادة التحميل السلسة */
       #root {
@@ -43,6 +48,7 @@
         background: #fff;
         margin: 0;
         padding: 0;
+        color: #000;
       }
       /* نص احتياطي للخطوط */
       @font-face {
@@ -63,37 +69,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // تقنية React للحفاظ على حالة التطبيق
-      let scrollPosition = 0;
-      const root = document.getElementById('root');
-
-      // حفظ حالة التطبيق قبل إعادة التحميل
-      window.addEventListener('beforeunload', () => {
-        scrollPosition = window.scrollY;
-        // تخزين موضع التمرير في sessionStorage
-        sessionStorage.setItem('_scrollPos', scrollPosition);
-      });
-
-      // استعادة حالة التطبيق بعد التحميل
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', restoreScroll);
-      } else {
-        restoreScroll();
-      }
-
-      function restoreScroll() {
-        // استعادة موضع التمرير المحفوظ
-        const savedPosition = sessionStorage.getItem('_scrollPos');
-        if (savedPosition !== null) {
-          // استخدام requestAnimationFrame لضمان تنفيذ التمرير بعد اكتمال الرندر
-          requestAnimationFrame(() => {
-            window.scrollTo(0, parseInt(savedPosition));
-            sessionStorage.removeItem('_scrollPos');
-          });
-        }
-      }
-    </script>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>

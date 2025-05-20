@@ -189,7 +189,7 @@ export default function Navbar() {
                       lang === 'ar' ? 'font-arabic' : 'font-english'
                     }`}
                   >
-                    +89(0) 1256 2156
+                    +966 54 824 0556
                   </span>
                 </motion.div>
 
@@ -313,7 +313,7 @@ export default function Navbar() {
                         <Phone size={16} />
                       </span>
                       <span className='font-medium text-black text-sm tracking-wide'>
-                        +89(0) 1256 2156
+                        +966 54 824 0556
                       </span>
                     </div>
                     <Link

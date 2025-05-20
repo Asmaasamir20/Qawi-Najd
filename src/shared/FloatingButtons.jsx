@@ -52,7 +52,7 @@ const FloatingButtons = () => {
         {/* Call Button */}
         <div className='group relative'>
           <a
-            href='tel:+201234567890'
+            href='tel:+966548240556'
             className='w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300'
           >
             <FaPhone size={16} color='white' />
@@ -66,7 +66,7 @@ const FloatingButtons = () => {
         {/* WhatsApp Button */}
         <div className='group relative'>
           <a
-            href='https://wa.me/+201234567890'
+            href='https://wa.me/966548240556'
             target='_blank'
             rel='noopener noreferrer'
             className='w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300'
@@ -84,7 +84,7 @@ const FloatingButtons = () => {
         {/* Email Button */}
         <div className='group relative'>
           <a
-            href='mailto:example@gmail.com'
+            href='mailto:info@qiwanagd.com'
             className='w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300'
           >
             <FaEnvelope size={16} color='white' />

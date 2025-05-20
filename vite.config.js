@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
+    root: process.cwd(),
+    publicDir: 'public',
     build: {
       target: 'esnext',
       minify: 'terser',
@@ -21,31 +23,57 @@ export default defineConfig(({ mode }) => {
         compress: {
           drop_console: isProduction,
           drop_debugger: isProduction,
+          pure_funcs: isProduction ? ['console.log', 'console.info', 'console.debug'] : [],
+        },
+        mangle: true,
+        format: {
+          comments: false,
         },
       },
       rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+        },
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
             'ui-vendor': ['@headlessui/react', '@heroicons/react'],
             'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+            'utils-vendor': ['lodash', 'date-fns'],
           },
+          assetFileNames: (assetInfo) => {
+            const info = assetInfo.name.split('.');
+            const ext = info[info.length - 1];
+            if (/\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
+              return `assets/images/[name]-[hash][extname]`;
+            }
+            if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
+              return `assets/fonts/[name]-[hash][extname]`;
+            }
+            return `assets/[name]-[hash][extname]`;
+          },
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
         },
       },
       chunkSizeWarningLimit: 1000,
       assetsDir: 'assets',
       emptyOutDir: true,
       copyPublicDir: true,
+      sourcemap: !isProduction,
     },
     plugins: [
       react({
         babel: {
-          plugins: [['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]],
+          plugins: [
+            ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+            ['@babel/plugin-transform-runtime', { regenerator: true }],
+          ],
         },
       }),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: [],
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
         manifest: {
           name: 'قوَى نَجْد للاستشارات الهندسية',
           short_name: 'قوَى نَجْد',
@@ -83,7 +111,7 @@ export default defineConfig(({ mode }) => {
                 cacheName: 'static-images',
                 expiration: {
                   maxEntries: 60,
-                  maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
                 },
                 cacheableResponse: {
                   statuses: [0, 200],
@@ -97,7 +125,7 @@ export default defineConfig(({ mode }) => {
                 cacheName: 'static-resources',
                 expiration: {
                   maxEntries: 60,
-                  maxAgeSeconds: 60 * 60 * 24, // 24 hours
+                  maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
                 },
                 cacheableResponse: {
                   statuses: [0, 200],
@@ -130,12 +158,18 @@ export default defineConfig(({ mode }) => {
         ext: '.gz',
         threshold: 1024,
         deleteOriginalAssets: false,
+        compressionOptions: {
+          level: 9,
+        },
       }),
       compression({
         algorithm: 'brotliCompress',
         ext: '.br',
         threshold: 1024,
         deleteOriginalAssets: false,
+        compressionOptions: {
+          level: 11,
+        },
       }),
       imagemin({
         gifsicle: {
@@ -146,7 +180,7 @@ export default defineConfig(({ mode }) => {
           optimizationLevel: 7,
         },
         mozjpeg: {
-          quality: 75,
+          quality: 80,
           progressive: true,
         },
         pngquant: {
@@ -163,10 +197,22 @@ export default defineConfig(({ mode }) => {
               name: 'removeEmptyAttrs',
               active: false,
             },
+            {
+              name: 'removeUnusedNS',
+              active: true,
+            },
+            {
+              name: 'removeComments',
+              active: true,
+            },
+            {
+              name: 'removeMetadata',
+              active: true,
+            },
           ],
         },
         webp: {
-          quality: 75,
+          quality: 80,
           method: 6,
         },
       }),
@@ -193,6 +239,8 @@ export default defineConfig(({ mode }) => {
         'i18next',
         'react-i18next',
         'i18next-browser-languagedetector',
+        'lodash',
+        'date-fns',
       ],
       exclude: [],
       force: true,
@@ -207,6 +255,10 @@ export default defineConfig(({ mode }) => {
       },
       watch: {
         usePolling: true,
+      },
+      fs: {
+        strict: true,
+        allow: ['..'],
       },
     },
   };

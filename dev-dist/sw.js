@@ -89,7 +89,7 @@ define(['./workbox-d0ee6e45'], (function (workbox) { 'use strict';
     "cacheName": "static-images",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 60,
-      maxAgeSeconds: 604800
+      maxAgeSeconds: 2592000
     }), new workbox.CacheableResponsePlugin({
       statuses: [0, 200]
     })]
@@ -98,7 +98,7 @@ define(['./workbox-d0ee6e45'], (function (workbox) { 'use strict';
     "cacheName": "static-resources",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 60,
-      maxAgeSeconds: 86400
+      maxAgeSeconds: 604800
     }), new workbox.CacheableResponsePlugin({
       statuses: [0, 200]
     })]
@@ -115,3 +115,4 @@ define(['./workbox-d0ee6e45'], (function (workbox) { 'use strict';
   self.__WB_DISABLE_DEV_LOGS = true;
 
 }));
+//# sourceMappingURL=sw.js.map

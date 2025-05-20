@@ -24,7 +24,7 @@ const ContactUsSection = () => {
       icon: <FaPhone size={18} className='text-red-500' />,
       iconBg: 'bg-[#EFF3F6]',
       title: isRTL ? 'اتصل بنا 24/7' : 'Call US 24/7',
-      text: 'Spanish mackerel yellow weaver sixgill. Sandperch flyingfish yellowfin cutt.',
+      text: '+966 54 824 0556',
     },
     {
       icon: <FaCalendarAlt size={18} className='text-red-500' />,
