@@ -328,7 +328,13 @@ const Footer = () => {
                   <span className='text-white font-medium block mb-1'>
                     {isRTL ? 'الهاتف' : 'Phone'}
                   </span>
-                  <span className='text-gray-400'>+966 54 824 0556</span>
+                  <a
+                    href='tel:+966548240556'
+                    className='text-gray-400 hover:text-[#F03E2F] transition-colors duration-300'
+                    dir='ltr'
+                  >
+                    +966 54 824 0556
+                  </a>
                 </div>
               </div>
             </div>

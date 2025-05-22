@@ -104,6 +104,7 @@ const ProductsOverview = () => {
       { id: 'all', title: 'الكل' },
       { id: 'Exterior design', title: 'تصميم خارجي' },
       { id: 'Interior design', title: 'تصميم داخلي' },
+      { id: 'Other design', title: '  تصاميم اخري' },
     ],
     []
   );

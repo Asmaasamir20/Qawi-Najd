@@ -9,6 +9,11 @@ const projectCategories = {
     title: 'تصميم داخلي',
     description: 'تصاميم داخلية عصرية وفاخرة',
   },
+  'Other design': {
+    id: 'Other design',
+    title: 'تصميمات أخرى',
+    description: 'تصاميم متنوعة ومميزة',
+  },
 };
 
 // Import images using a more production-friendly approach
@@ -22,10 +27,10 @@ const getImageUrl = (path) => {
   try {
     // First check if we're in development and use the source path
     if (import.meta.env.DEV) {
-      return `/src/assets/images/projects/${path}`;
+      return `/src/assets/images/projects/${path}?v=${Date.now()}`;
     }
     // Use the public URL pattern for assets in production
-    return `/assets/images/projects/${path}`;
+    return `/assets/images/projects/${path}?v=${Date.now()}`;
   } catch (error) {
     console.error(`Error processing image path: ${path}`, error);
     return '/images/placeholder.png';
@@ -128,6 +133,24 @@ const projects = [
     category: projectCategories['Interior design'],
     group: 'beauty-salon-kuwait',
   })),
+
+  // Other Design Projects
+  {
+    id: 'other-design-1',
+    title: 'تصميم فيلا سكنية',
+    src: getImageUrl('Other design/1.webp'),
+    type: 'Other design',
+    category: projectCategories['Other design'],
+    group: 'other-design',
+  },
+  {
+    id: 'other-design-2',
+    title: 'تصميم فيلا سكنية',
+    src: getImageUrl('Other design/2.webp'),
+    type: 'Other design',
+    category: projectCategories['Other design'],
+    group: 'other-design',
+  },
 ];
 
 // تجميع المشاريع حسب المجموعات

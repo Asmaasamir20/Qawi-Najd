@@ -184,13 +184,15 @@ export default function Navbar() {
                   <span className='flex items-center justify-center w-8 h-8 rounded-full bg-white shadow text-black'>
                     <Phone size={16} />
                   </span>
-                  <span
-                    className={`font-medium text-black text-sm tracking-wide ${
-                      lang === 'ar' ? 'font-arabic' : 'font-english'
+                  <a
+                    href='tel:+966548240556'
+                    className={`font-medium text-black text-sm tracking-wide hover:text-[#F03E2F] transition-colors duration-300 ${
+                      lang === 'ar' ? 'font-arabic text-right' : 'font-english'
                     }`}
+                    dir={lang === 'ar' ? 'ltr' : 'auto'}
                   >
-                    +966 54 824 0556
-                  </span>
+                    +966548240556
+                  </a>
                 </motion.div>
 
                 {/* Request a quote */}
@@ -207,7 +209,7 @@ export default function Navbar() {
                     <span
                       className={`font-medium text-black text-sm ${lang === 'ar' ? 'mr-2' : 'mr-2'}`}
                     >
-                      {t('request_quote')}
+                      {t('home.request_quote')}
                     </span>
                     <motion.span
                       className='flex items-center justify-center w-5 h-5 rounded-full bg-[#F03E2F] text-white group-hover:bg-red-700 transition'
@@ -312,9 +314,15 @@ export default function Navbar() {
                       <span className='flex items-center justify-center w-8 h-8 rounded-full bg-white shadow text-black'>
                         <Phone size={16} />
                       </span>
-                      <span className='font-medium text-black text-sm tracking-wide'>
-                        +966 54 824 0556
-                      </span>
+                      <a
+                        href='tel:+966548240556'
+                        className={`font-medium text-black text-sm tracking-wide hover:text-[#F03E2F] transition-colors duration-300 ${
+                          lang === 'ar' ? 'font-arabic text-right' : 'font-english'
+                        }`}
+                        dir={lang === 'ar' ? 'ltr' : 'auto'}
+                      >
+                        +966548240556
+                      </a>
                     </div>
                     <Link
                       to='/quote'
@@ -327,7 +335,7 @@ export default function Navbar() {
                         <ArrowUpRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
                       </span>
                       <span className={`text-black ${lang === 'ar' ? 'ml-2' : 'mr-2'}`}>
-                        {t('request_quote')}
+                        {t('home.request_quote')}
                       </span>
                     </Link>
 

@@ -14,7 +14,10 @@
     "prepare": "husky install",
     "copy-assets": "node copy-assets.js",
     "build:prod": "NODE_ENV=production vite build",
-    "preview:prod": "vite preview --mode production"
+    "preview:prod": "vite preview --mode production",
+    "lighthouse:desktop": "lhci autorun --config=lighthouserc.cjs",
+    "lighthouse:mobile": "lhci autorun --config=lighthouserc.mobile.cjs",
+    "lighthouse": "npm run lighthouse:desktop && npm run lighthouse:mobile"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -22,6 +25,7 @@
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-select": "^2.2.4",
+    "@react-google-maps/api": "^2.20.6",
     "@shadcn/ui": "^0.0.4",
     "canvas": "^3.1.0",
     "date-fns": "^3.3.1",
@@ -45,6 +49,7 @@
     "react-photoswipe-gallery": "^3.1.1",
     "react-router-dom": "^7.6.0",
     "react-toastify": "^11.0.5",
+    "styled-components": "^6.1.18",
     "swiper": "^11.2.6",
     "yet-another-react-lightbox": "^3.23.1",
     "zod": "^3.24.4"
@@ -54,6 +59,7 @@
     "@babel/plugin-transform-react-jsx": "^7.27.1",
     "@babel/plugin-transform-runtime": "^7.24.0",
     "@eslint/js": "^9.25.0",
+    "@lhci/cli": "^0.12.0",
     "@types/lodash": "^4.14.202",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

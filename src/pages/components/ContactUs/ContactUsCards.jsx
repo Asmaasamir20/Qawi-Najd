@@ -12,25 +12,36 @@ const ContactUsSection = () => {
       icon: <FaEnvelope size={18} className='text-red-500' />,
       iconBg: 'bg-[#EFF3F6]',
       title: isRTL ? 'راسلنا 24/7' : 'Mail Us 24/7',
-      text: 'Spanish mackerel yellow weaver sixgill. Sandperch flyingfish yellowfin cutt.',
+      text: 'info@qiwanagd.com',
     },
     {
       icon: <MdLocationOn size={18} className='text-red-500' />,
       iconBg: 'bg-[#EFF3F6]',
-      title: isRTL ? 'موقعنا' : 'Our Location',
-      text: 'Spanish mackerel yellow weaver sixgill. Sandperch flyingfish yellowfin cutt.',
+      title: isRTL ? ' موقعنا الرئيسي' : 'Our Location',
+      text: <div>مكتب قوي نجد – الرياض، حي الملقا، طريق أنس بن مالك، المملكة العربية السعودية</div>,
     },
     {
       icon: <FaPhone size={18} className='text-red-500' />,
       iconBg: 'bg-[#EFF3F6]',
       title: isRTL ? 'اتصل بنا 24/7' : 'Call US 24/7',
-      text: '+966 54 824 0556',
+      text: (
+        <div>
+          <span dir='ltr'>+966 54 824 0556</span>
+          <br />
+          <span dir='ltr'>+966 55 777 0557</span>
+        </div>
+      ),
     },
     {
       icon: <FaCalendarAlt size={18} className='text-red-500' />,
       iconBg: 'bg-[#EFF3F6]',
       title: isRTL ? 'أيام العمل' : 'Working Days',
-      text: 'Spanish mackerel yellow weaver sixgill. Sandperch flyingfish yellowfin cutt.',
+      text: (
+        <div>
+          من السبت إلى الجمعة :<br />
+          08am - 04pm
+        </div>
+      ),
     },
   ];
 
@@ -56,24 +67,44 @@ const ContactUsSection = () => {
                 <p className='text-gray-500 text-sm leading-relaxed pb-5'>{item.text}</p>
                 <div className=' my-6'>
                   {' '}
-                  <button
-                    className={`
-                  absolute bottom-5 ltr:right-5 rtl:left-5 w-10 h-10  rounded-full flex items-center justify-center text-xl shadow-md
-                  transition-all duration-500
-                  ${
-                    index === 1
-                      ? 'bg-[#e7401c] text-white'
-                      : 'bg-[#222] text-white group-hover:bg-[#e7401c] group-hover:text-white'
-                  }
-                `}
-                  >
-                    <span
-                      className={`inline-block transition-all duration-500
-                    ${index === 1 ? '-rotate-45 group-hover:rotate-0' : ' -rotate-45 group-hover:rotate-0'}`}
+                  {index === 0 ? (
+                    <a
+                      href='mailto:info@qiwanagd.com'
+                      className={`
+                        absolute bottom-5 ltr:right-5 rtl:left-5 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md
+                        transition-all duration-500 bg-[#e7401c] text-white
+                      `}
                     >
-                      ➔
-                    </span>
-                  </button>
+                      <span className='inline-block -rotate-45 group-hover:rotate-0 transition-all duration-500'>
+                        ➔
+                      </span>
+                    </a>
+                  ) : index === 1 ? (
+                    <a
+                      href='https://maps.app.goo.gl/nwye1jD1GaLqTaUX6'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className={`
+                        absolute bottom-5 ltr:right-5 rtl:left-5 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md
+                        transition-all duration-500 bg-[#e7401c] text-white
+                      `}
+                    >
+                      <span className='inline-block -rotate-45 group-hover:rotate-0 transition-all duration-500'>
+                        ➔
+                      </span>
+                    </a>
+                  ) : (
+                    <button
+                      className={`
+                        absolute bottom-5 ltr:right-5 rtl:left-5 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md
+                        transition-all duration-500 bg-[#222] text-white group-hover:bg-[#e7401c] group-hover:text-white
+                      `}
+                    >
+                      <span className='inline-block -rotate-45 group-hover:rotate-0 transition-all duration-500'>
+                        ➔
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
